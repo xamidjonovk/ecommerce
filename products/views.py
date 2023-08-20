@@ -5,7 +5,10 @@ from rest_framework.response import Response
 
 from products.models import Product, Review, Category
 from products.serializers import ProductSerializer, ReviewSerializer, CategorySerializer
+from rest_framework import generics, filters
 
+from django_filters import rest_framework as django_filters
+from .filters import ProductFilter
 
 class ReviewViewSet(viewsets.ModelViewSet):
     queryset = Review.objects.all()
@@ -20,6 +23,11 @@ class CategoryViewSet(viewsets.ModelViewSet):
 class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+
+    filter_backends = (django_filters.DjangoFilterBackend, filters.SearchFilter)
+    filterset_class = ProductFilter
+    search_fields = ['name', 'description']
+
 
     def list(self, request, *args, **kwargs):
         category = request.query_params.get('category', None)
