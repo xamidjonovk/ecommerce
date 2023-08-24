@@ -1,26 +1,15 @@
 from django.db import models
-from rest_framework import status, viewsets
+from django_filters import rest_framework as django_filters
+from rest_framework import filters
+from rest_framework import viewsets
 from rest_framework.decorators import action
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 
-from products.models import Product, Review, Category
-from products.serializers import ProductSerializer, ReviewSerializer, CategorySerializer
-from rest_framework import filters
-
-from django_filters import rest_framework as django_filters
-from .filters import ProductFilter
-from rest_framework.pagination import PageNumberPagination
-from rest_framework.permissions import IsAuthenticated
-
-
-class ReviewViewSet(viewsets.ModelViewSet):
-    queryset = Review.objects.all()
-    serializer_class = ReviewSerializer
-
-
-class CategoryViewSet(viewsets.ModelViewSet):
-    queryset = Category.objects.all()
-    serializer_class = CategorySerializer
+from products.filters import ProductFilter
+from products.models import Product
+from products.permissions import IsStaffOrReadOnly
+from products.serializers import ProductSerializer
 
 
 class CustomPagination(PageNumberPagination):
@@ -28,7 +17,7 @@ class CustomPagination(PageNumberPagination):
 
 
 class ProductViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated]  # default =  AllowAny
+    permission_classes = [IsStaffOrReadOnly]  # default =  AllowAny
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
