@@ -1,7 +1,12 @@
 from django.contrib.auth.models import User
 from django.db import models
 from .product import Product
+from django.core.validators import RegexValidator
 
+phone_regex = RegexValidator(
+    regex=r'^\+998\d{9}$',
+    message="Phone number must be in the format: '+998xxxxxxxxx'."
+)
 
 class Order(models.Model):
     PENDING = 'Pending'
@@ -27,6 +32,7 @@ class Order(models.Model):
         choices=STATUS_CHOICES,
         default=PENDING,
     )
+    phone_number = models.CharField(validators=[phone_regex], max_length=13, blank=True, null=True)
 
     def set_status(self, new_status):
         if new_status not in dict(self.STATUS_CHOICES):

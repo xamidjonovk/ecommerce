@@ -14,7 +14,7 @@ def notify_admin(sender, instance, created, **kwargs):
 
         # Prepare the message text (replace this with actual order details)
         message_text = f"New Order: {instance.id}\n Product: {instance.product.name}\n Quantity: {instance.quantity}\n " \
-                       f"Client: {instance.customer.username}"
+                       f"Client: {instance.customer.username}\n tel: {instance.phone_number}"
 
         response = requests.post(
             url=f'https://api.telegram.org/bot{token}/{method}',
