@@ -1,6 +1,23 @@
 # ecommerce
 E-commerce API
 
+celery -A config  worker -l info --pool=solo 
+docker-compose 
+
+docker-compose run web python3 manage.py createsuperuser
+
+
+NEW CHANGES
+✅ Refactoring  according to best practises
+✅ Added dotenv for security
+✅ Custom Permissions
+✅ Order Products
+✅ replenish and reduce stock of products
+✅ Django signals, integration to telegram bot
+
+
+
+
 ## Dumdata from old server: 
 python manage.py dumpdata > data.json
 

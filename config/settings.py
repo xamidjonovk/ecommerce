@@ -22,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-8spg!*&f3)yii%g4ei8n-#1tr8%yuo!)t9yz=chwuo)z(a=8p@')
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -154,8 +154,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'matemmix@gmail.com'
-EMAIL_HOST_PASSWORD = 'uhsbduiallyxqbnp'
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 
 
 DJOSER = {
@@ -167,3 +167,7 @@ DJOSER = {
 }
 
 TELEGRAM_BOT_TOKEN = os.environ.get('TELEGRAM_BOT_TOKEN')
+
+CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL') # RabbitMQ as a broker
+CELERY_RESULT_BACKEND = os.environ.get('CELERY_RESULT_BACKEND') # Redis as a result backend
+
