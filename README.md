@@ -1,6 +1,8 @@
 # ecommerce
 E-commerce API
 
+docker-compose exec web python manage.py createsuperuser
+
 celery -A config  worker -l info --pool=solo 
 docker-compose 
 
