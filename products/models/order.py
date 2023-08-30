@@ -33,6 +33,7 @@ class Order(models.Model):
         default=PENDING,
     )
     phone_number = models.CharField(validators=[phone_regex], max_length=13, blank=True, null=True)
+    is_paid = models.BooleanField(default=False)
 
     def set_status(self, new_status):
         if new_status not in dict(self.STATUS_CHOICES):
