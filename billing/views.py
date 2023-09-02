@@ -22,10 +22,10 @@ class CreateChargeView(views.APIView):
             return Response({"error": "Order not found"}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
-            total_amount = order.product.price*order.quantity
+            total_amount = order.product.price * order.quantity
             charge = stripe.Charge.create(
                 amount=int(total_amount*100),
-                currency="uzs",
+                currency="usd",
                 source=stripe_token,
             )
 

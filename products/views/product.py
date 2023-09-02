@@ -5,7 +5,6 @@ from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
-
 from products.filters import ProductFilter
 from products.models import Product
 from products.permissions import IsStaffOrReadOnly

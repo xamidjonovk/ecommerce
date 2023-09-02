@@ -46,8 +46,9 @@ INSTALLED_APPS = [
     'djoser',
     'rest_framework_simplejwt',
 
+    'custom_auth',
     'products',
-    'billing'
+    'billing',
 ]
 
 MIDDLEWARE = [
@@ -94,6 +95,7 @@ DATABASES = {
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
+AUTH_USER_MODEL = 'custom_auth.CustomUser'
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -138,8 +140,8 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 15,
 
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.BasicAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
+        # 'rest_framework.authentication.BasicAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
 
     ]
@@ -173,3 +175,4 @@ CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL') # RabbitMQ as a broker
 CELERY_RESULT_BACKEND = os.environ.get('CELERY_RESULT_BACKEND') # Redis as a result backend
 STRIPE_PUBLIC_KEY = os.environ.get('STRIPE_PUBLIC_KEY')
 STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY')
+SMS_KEY = os.environ.get('SMS_KEY')
