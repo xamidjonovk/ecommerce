@@ -28,6 +28,8 @@ class ProductViewSetTestCase(APITestCase):
         self.client.force_authenticate(self.user)
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data['results']), 2)
+
 
     def test_product_filter_by_category(self):
         url = reverse('product-list') + '?category=' + str(self.category1.id)
