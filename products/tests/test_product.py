@@ -42,14 +42,13 @@ class ProductViewSetTestCase(APITestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data['product']['name'], 'Laptop')
-        # Add checks for related products, if any.
 
     def test_top_rated(self):
         url = reverse('product-top-rated')
         self.client.force_authenticate(self.user)
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        # Add checks for top-rated products, if any.
+        self.assertEqual(response.data[0]['name'], 'Laptop')
 
     def test_average_rating(self):
         url = reverse('product-average-rating', args=[self.product1.id])
@@ -61,12 +60,13 @@ class ProductViewSetTestCase(APITestCase):
     def test_permission_denied_for_anonymous_create(self):
         self.client.force_authenticate(user=None)  # "Log out" to make the client anonymous
         url = reverse('product-list')
-        data = {'name': 'Test Product', 'description': 'This is a test product', 'price': 10.00}  # Replace with your actual fields
+        data = {'name': 'Test Product', 'description': 'This is a test product', 'price': 10.00}
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_permission_granted_for_staff(self):
         url = reverse('product-list')
         self.client.force_authenticate(self.staff_user)
-        response = self.client.get(url)
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        data = {'name': 'Test Product', 'description': 'This is a test product', 'price': 10.00}
+        response = self.client.post(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
